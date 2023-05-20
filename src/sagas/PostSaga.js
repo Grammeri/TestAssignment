@@ -1,6 +1,6 @@
 import { put, call, takeEvery } from 'redux-saga/effects';
 import { FETCH_POSTS_REQUEST, fetchPostsSuccess, fetchPostsFailure } from '../actions/postActions';
-import { getPosts } from '../services/api';
+import { getPosts } from '../services/api/api';
 
 function* fetchPosts() {
     try {

@@ -1,9 +1,11 @@
 import React from 'react';
 
-export const PostItem = () => {
+const NavBar = () => {
     return (
         <div>
-
+            Navbar
         </div>
     );
 };
+
+export default NavBar;

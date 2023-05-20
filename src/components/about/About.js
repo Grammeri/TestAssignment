@@ -1,10 +1,9 @@
 import React from 'react';
 
-export const Header = () => {
+export const About = () => {
     return (
         <div>
-
+About
         </div>
     );
 };
-

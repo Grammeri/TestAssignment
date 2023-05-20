@@ -1,9 +1,9 @@
 import React from 'react';
 
-export const PostList = () => {
+export const UserDetail = () => {
     return (
         <div>
-
+UserDetail
         </div>
     );
 };

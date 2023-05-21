@@ -13,9 +13,9 @@ export const UserDetail = () => {
     const loading = useSelector(state => state.user.loading);
 
     useEffect(() => {
-        dispatch(fetchUsersRequest());
+        dispatch(fetchUsersRequest(id));
         dispatch(fetchPostsRequest());
-    }, [dispatch]);
+    }, [dispatch, id]);
 
     const user = users.find(user => user.id.toString() === id);
     const userPosts = posts.filter(post => post.userId.toString() === id);

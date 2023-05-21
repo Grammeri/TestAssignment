@@ -11,6 +11,9 @@ export const projectAPI = {
     getUsers() {
         return instance.get("/users");
     },
+    getUser(userId) {
+        return instance.get(`/users/${userId}`);
+    },
     getComments(postId) {
         return instance.get(`/posts/${postId}/comments`);
     }

@@ -1,32 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPostsRequest } from '../../actions/postActions';
+import { fetchCommentsRequest } from '../../actions/commentActions';
+import { fetchUsersRequest } from "../../actions/userActions";
 import { Link } from 'react-router-dom';
 import { ListGroup, Button } from 'react-bootstrap';
-import {projectAPI} from "../../services/api/api";
-
 
 export const PostList = () => {
-    const [posts, setPosts] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [selectedPost, setSelectedPost] = useState(null);
+    const dispatch = useDispatch();
+    const posts = useSelector(state => state.post.posts);
+    const loading = useSelector(state => state.post.loading);
+    const comments = useSelector(state => state.comment.comments);
+    const [commentsShown, setCommentsShown] = useState({});
 
     useEffect(() => {
-        const fetchPosts = async () => {
-            await new Promise((r) => setTimeout(r, 500)); // Artificial delay of 0.5s
-            const response = await projectAPI.getPosts();
-            setPosts(response.data);
-            setLoading(false);
-        };
-        fetchPosts();
-    }, []);
+        dispatch(fetchPostsRequest());
+        dispatch(fetchUsersRequest());
+    }, [dispatch]);
 
-    const handleCommentsClick = async (post) => {
-        if (!post.comments) {
-            const response = await projectAPI.getComments(post.id);
-            post.comments = response.data;
-        } else {
-            post.comments = undefined;
+    const handleCommentsClick = (postId) => {
+        setCommentsShown(prevState => ({
+            ...prevState,
+            [postId]: !prevState[postId]
+        }));
+
+        if(!comments[postId]) {
+            dispatch(fetchCommentsRequest(postId));
         }
-        setSelectedPost({...post});
     };
 
     if (loading) return <div>Loading...</div>;
@@ -41,10 +41,10 @@ export const PostList = () => {
                         <Link to={`/user/${post.userId}`}>
                             <img src="https://via.placeholder.com/50" alt="User Avatar" />
                         </Link>
-                        <Button onClick={() => handleCommentsClick(post)}>Comments</Button>
-                        {post.id === selectedPost?.id && selectedPost?.comments && (
+                        <Button onClick={() => handleCommentsClick(post.id)}>Comments</Button>
+                        {comments[post.id] && commentsShown[post.id] && (
                             <div>
-                                {selectedPost.comments.map((comment) => (
+                                {comments[post.id].map((comment) => (
                                     <div key={comment.id}>
                                         <h5>{comment.email}</h5>
                                         <p>{comment.body}</p>
@@ -58,5 +58,3 @@ export const PostList = () => {
         </div>
     );
 };
-
-

@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
 import { fetchUserRequest } from '../../actions/userActions';
 import { fetchPostsRequest } from '../../actions/postActions';
-import { Card, Button, Spinner } from 'react-bootstrap';
+import { Card, Button, Container } from 'react-bootstrap';
 import PaginationComponent from '../share/Pagination/PaginationComponent';
+import Loader from '../share/loader/Loader';
 
 export const UserDetail = () => {
     const { id } = useParams();
@@ -37,9 +38,7 @@ export const UserDetail = () => {
     if (loading) {
         return (
             <div className="text-center">
-                <Spinner animation="border" role="status">
-                    <span className="sr-only">Loading...</span>
-                </Spinner>
+                <Loader />
             </div>
         );
     }
@@ -49,7 +48,7 @@ export const UserDetail = () => {
     }
 
     return (
-        <div>
+        <Container className="mt-4">
             <h1>{user.name}</h1>
             <Card>
                 <Card.Body>
@@ -82,6 +81,6 @@ export const UserDetail = () => {
                 currentPage={currentPage}
             />
             <Link to="/" className="btn btn-secondary">Back</Link>
-        </div>
+        </Container>
     );
 };

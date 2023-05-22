@@ -1,32 +1,37 @@
 import { FETCH_COMMENTS_REQUEST, FETCH_COMMENTS_SUCCESS, FETCH_COMMENTS_FAILURE } from '../actions/commentActions';
 
 const initialState = {
-    loading: false,
     comments: {},
-    error: '',
+    loadingComments: false,
+    error: null
 };
 
-export const commentReducer = (state = initialState, action) => {
+const commentReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_COMMENTS_REQUEST:
             return {
                 ...state,
-                loading: true,
+                loadingComments: true,
+                error: null
             };
         case FETCH_COMMENTS_SUCCESS:
             return {
                 ...state,
-                loading: false,
-                comments: { ...state.comments, [action.payload.postId]: action.payload.comments },
-                error: ''
+                comments: {
+                    ...state.comments,
+                    [action.payload.postId]: action.payload.comments
+                },
+                loadingComments: false
             };
         case FETCH_COMMENTS_FAILURE:
             return {
                 ...state,
-                loading: false,
-                error: action.payload,
+                loadingComments: false,
+                error: action.payload
             };
         default:
             return state;
     }
 };
+
+export default commentReducer;

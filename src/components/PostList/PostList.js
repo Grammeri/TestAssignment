@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPostsRequest } from '../../actions/postActions';
 import { fetchCommentsRequest } from '../../actions/commentActions';
-import { fetchUserRequest } from "../../actions/userActions";
+import { fetchUserRequest } from '../../actions/userActions';
 import { Link } from 'react-router-dom';
-import { ListGroup, Button, Spinner } from 'react-bootstrap';
-import PaginationComponent from "../share/Pagination/PaginationComponent";
-
-
+import { Button, Container, ListGroup } from 'react-bootstrap';
+import PaginationComponent from '../share/Pagination/PaginationComponent';
+import Loader from '../share/loader/Loader';
 
 export const PostList = () => {
     const dispatch = useDispatch();
@@ -53,15 +52,13 @@ export const PostList = () => {
     if (showLoader) {
         return (
             <div className="text-center">
-                <Spinner animation="border" role="status">
-                    <span className="sr-only">Loading...</span>
-                </Spinner>
+                <Loader />
             </div>
         );
     }
 
     return (
-        <div>
+        <Container className="mt-4">
             <ListGroup>
                 {currentPosts.map(post => (
                     <ListGroup.Item key={post.id}>
@@ -70,9 +67,15 @@ export const PostList = () => {
                         <Link to={`/user/${post.userId}`}>
                             <img src="https://via.placeholder.com/50" alt="User Avatar" />
                         </Link>
-                        <Button variant="secondary" onClick={() => handleCommentsClick(post.id, post.userId)}>Comments</Button>
+                        <Button
+                            variant="secondary"
+                            onClick={() => handleCommentsClick(post.id, post.userId)}
+                            className="mt-3"
+                        >
+                            Comments
+                        </Button>
                         {comments[post.id] && commentsShown[post.id] && (
-                            <div>
+                            <div className="mt-3">
                                 {user && <p>Author: {user.name} - {user.email}</p>}
                                 {comments[post.id].map(comment => (
                                     <div key={comment.id}>
@@ -91,6 +94,6 @@ export const PostList = () => {
                 paginate={paginate}
                 currentPage={currentPage}
             />
-        </div>
+        </Container>
     );
 };

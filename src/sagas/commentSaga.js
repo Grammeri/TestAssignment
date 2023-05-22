@@ -1,20 +1,21 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { call, put, takeEvery, delay } from 'redux-saga/effects';
 import { FETCH_COMMENTS_FAILURE, FETCH_COMMENTS_REQUEST, FETCH_COMMENTS_SUCCESS } from '../actions/commentActions';
 import { projectAPI } from '../services/api/api';
 
-export function* fetchComments(action) {
+function* fetchComments(action) {
     try {
-        const response = yield call(projectAPI.getComments, action.postId);
-        yield put({ type: FETCH_COMMENTS_SUCCESS, payload: { postId: action.postId, comments: response.data } });
+        yield delay(2000); // 2-second delay
+        const response = yield call(projectAPI.getComments, action.payload);
+        yield put({ type: FETCH_COMMENTS_SUCCESS, payload: { postId: action.payload, comments: response.data } });
     } catch (error) {
         yield put({ type: FETCH_COMMENTS_FAILURE, payload: error.message });
     }
 }
 
-export function* watchFetchComments() {
+function* watchFetchComments() {
     yield takeEvery(FETCH_COMMENTS_REQUEST, fetchComments);
 }
 
-export function* commentSaga() {
+export default function* commentSaga() {
     yield watchFetchComments();
 }

@@ -3,10 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
 import { fetchUserRequest } from '../../actions/userActions';
 import { fetchPostsRequest } from '../../actions/postActions';
-import Loader from "../share/loader";
-import {Card} from "react-bootstrap";
-
-
+import { Card, Button, Spinner } from 'react-bootstrap';
 
 export const UserDetail = () => {
     const { id } = useParams();
@@ -21,17 +18,19 @@ export const UserDetail = () => {
         dispatch(fetchPostsRequest());
         setTimeout(() => {
             setShowContent(true);
-        }, 1000); // 1 second delay
+        }, 2000); // 2-second delay
     }, [dispatch, id]);
 
     const userPosts = posts.filter(post => post.userId.toString() === id);
 
-    if (!showContent) {
-        return <Loader />;
-    }
-
     if (loading) {
-        return <div>Loading...</div>;
+        return (
+            <div className="text-center">
+                <Spinner animation="border" role="status">
+                    <span className="sr-only">Loading...</span>
+                </Spinner>
+            </div>
+        );
     }
 
     if (!user) {
@@ -65,7 +64,7 @@ export const UserDetail = () => {
             ) : (
                 <p>No posts found for this user.</p>
             )}
-            <Link to="/" className="btn btn-primary">Back</Link>
+            <Link to="/" className="btn btn-secondary">Back</Link>
         </div>
     );
 };

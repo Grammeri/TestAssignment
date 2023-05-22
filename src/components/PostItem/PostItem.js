@@ -2,52 +2,60 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCommentsRequest } from '../../actions/commentActions';
 import { Link } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
-import { ListGroup } from 'react-bootstrap';
-import {fetchUserRequest} from "../../actions/userActions";
+import { Button, Card, Spinner } from 'react-bootstrap';
 
 export const PostItem = ({ post }) => {
     const dispatch = useDispatch();
-    const comments = useSelector(state => state.comment.comments);
-    const users = useSelector(state => state.user.users);
+    const comments = useSelector((state) => state.comment.comments);
+    const users = useSelector((state) => state.user.users);
     const [commentsShown, setCommentsShown] = useState(false);
-    const [user, setUser] = useState(null);
+    const [loadingComments, setLoadingComments] = useState(false);
 
-    useEffect(() => {
-        const user = users.find(u => u.id === post.userId);
-        setUser(user);
-    }, [post.userId, users]);
+    const user = users.find((user) => user.id === post.userId);
 
-    const handleCommentsClick = async () => {
-        setCommentsShown(prevState => !prevState);
+    const handleCommentsClick = () => {
+        setCommentsShown((prevState) => !prevState);
 
         if (!comments[post.id]) {
-            await dispatch(fetchUserRequest(post.userId));
+            setLoadingComments(true); // Set loading state to true
             dispatch(fetchCommentsRequest(post.id));
+            // Simulate a delay of 1.5 seconds before setting loading state to false
+            setTimeout(() => {
+                setLoadingComments(false);
+            }, 1500);
         }
     };
 
     return (
-        <ListGroup.Item key={post.id}>
-            <h2>{post.title}</h2>
-            <p>{post.body}</p>
-            {user && (
-                <Link to={`/user/${post.userId}`}>
-                    <img src="https://via.placeholder.com/50" alt="User Avatar" />
-                    <p>{user.name}</p>
-                </Link>
-            )}
-            <Button onClick={handleCommentsClick}>Comments</Button>
-            {comments[post.id] && commentsShown && (
-                <div>
-                    {comments[post.id].map(comment => (
-                        <div key={comment.id}>
-                            <h5>{comment.email}</h5>
-                            <p>{comment.body}</p>
+        <Card>
+            <Card.Body>
+                <Card.Title>{post.title}</Card.Title>
+                <Card.Text>{post.body}</Card.Text>
+                {user && (
+                    <Link to={`/user/${post.userId}`}>
+                        <img src="https://via.placeholder.com/50" alt="User Avatar" />
+                        <p>{user.name}</p>
+                    </Link>
+                )}
+                <Button onClick={handleCommentsClick}>Comments</Button>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    {loadingComments && (
+                        <Spinner animation="border" variant="primary" role="status">
+                            <span className="sr-only">Loading...</span>
+                        </Spinner>
+                    )}
+                    {comments[post.id] && commentsShown && (
+                        <div>
+                            {comments[post.id].map((comment) => (
+                                <div key={comment.id}>
+                                    <h5>{comment.email}</h5>
+                                    <p>{comment.body}</p>
+                                </div>
+                            ))}
                         </div>
-                    ))}
+                    )}
                 </div>
-            )}
-        </ListGroup.Item>
+            </Card.Body>
+        </Card>
     );
 };

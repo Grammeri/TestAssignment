@@ -1,9 +1,14 @@
-import { put, call, takeEvery } from 'redux-saga/effects';
-import { FETCH_POSTS_REQUEST, FETCH_POSTS_SUCCESS, FETCH_POSTS_FAILURE, fetchPostsSuccess, fetchPostsFailure} from '../actions/postActions';
+import { put, call, takeEvery, delay } from 'redux-saga/effects';
+import {
+    FETCH_POSTS_REQUEST,
+    fetchPostsSuccess,
+    fetchPostsFailure,
+} from '../actions/postActions';
 import { projectAPI } from '../services/api/api';
 
-export function* fetchPosts() {
+function* fetchPosts() {
     try {
+        yield delay(2000); // Artificial delay
         const response = yield call(projectAPI.getPosts);
         yield put(fetchPostsSuccess(response.data));
     } catch (error) {

@@ -1,0 +1,14 @@
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Adjust this margin value as needed */
+}
+
+.pagination-container .page-item.active .page-link {
+    background-color: gray !important;
+    border-color: gray !important;
+}
+
+.pagination-container .page-link {
+    color: black !important;
+}

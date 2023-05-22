@@ -5,6 +5,9 @@ import { fetchCommentsRequest } from '../../actions/commentActions';
 import { fetchUserRequest } from "../../actions/userActions";
 import { Link } from 'react-router-dom';
 import { ListGroup, Button, Spinner } from 'react-bootstrap';
+import PaginationComponent from "../share/Pagination/PaginationComponent";
+
+
 
 export const PostList = () => {
     const dispatch = useDispatch();
@@ -14,6 +17,10 @@ export const PostList = () => {
     const user = useSelector(state => state.user.user);
     const [commentsShown, setCommentsShown] = useState({});
     const [showLoader, setShowLoader] = useState(true);
+
+    // Pagination state
+    const [currentPage, setCurrentPage] = useState(1);
+    const postsPerPage = 5;
 
     useEffect(() => {
         dispatch(fetchPostsRequest());
@@ -35,6 +42,14 @@ export const PostList = () => {
         }
     };
 
+    // Get current posts
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
+    // Change page
+    const paginate = pageNumber => setCurrentPage(pageNumber);
+
     if (showLoader) {
         return (
             <div className="text-center">
@@ -48,7 +63,7 @@ export const PostList = () => {
     return (
         <div>
             <ListGroup>
-                {posts.map(post => (
+                {currentPosts.map(post => (
                     <ListGroup.Item key={post.id}>
                         <h2>{post.title}</h2>
                         <p>{post.body}</p>
@@ -70,6 +85,12 @@ export const PostList = () => {
                     </ListGroup.Item>
                 ))}
             </ListGroup>
+            <PaginationComponent
+                postsPerPage={postsPerPage}
+                totalPosts={posts.length}
+                paginate={paginate}
+                currentPage={currentPage}
+            />
         </div>
     );
 };

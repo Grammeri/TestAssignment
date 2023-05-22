@@ -4,6 +4,7 @@ import { useParams, Link } from 'react-router-dom';
 import { fetchUserRequest } from '../../actions/userActions';
 import { fetchPostsRequest } from '../../actions/postActions';
 import { Card, Button, Spinner } from 'react-bootstrap';
+import PaginationComponent from '../share/Pagination/PaginationComponent';
 
 export const UserDetail = () => {
     const { id } = useParams();
@@ -12,6 +13,8 @@ export const UserDetail = () => {
     const posts = useSelector(state => state.post.posts);
     const loading = useSelector(state => state.user.loading);
     const [showContent, setShowContent] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const postsPerPage = 5;
 
     useEffect(() => {
         dispatch(fetchUserRequest(id));
@@ -22,6 +25,14 @@ export const UserDetail = () => {
     }, [dispatch, id]);
 
     const userPosts = posts.filter(post => post.userId.toString() === id);
+
+    // Get current posts
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = userPosts.slice(indexOfFirstPost, indexOfLastPost);
+
+    // Change page
+    const paginate = pageNumber => setCurrentPage(pageNumber);
 
     if (loading) {
         return (
@@ -52,8 +63,8 @@ export const UserDetail = () => {
             </Card>
 
             <h2>Posts:</h2>
-            {userPosts.length > 0 ? (
-                userPosts.map(post => (
+            {currentPosts.length > 0 ? (
+                currentPosts.map(post => (
                     <Card key={post.id} className="mb-3">
                         <Card.Body>
                             <Card.Title>{post.title}</Card.Title>
@@ -64,6 +75,12 @@ export const UserDetail = () => {
             ) : (
                 <p>No posts found for this user.</p>
             )}
+            <PaginationComponent
+                postsPerPage={postsPerPage}
+                totalPosts={userPosts.length}
+                paginate={paginate}
+                currentPage={currentPage}
+            />
             <Link to="/" className="btn btn-secondary">Back</Link>
         </div>
     );

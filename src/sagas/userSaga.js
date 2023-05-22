@@ -1,16 +1,22 @@
 import { put, call, takeEvery } from 'redux-saga/effects';
-import { FETCH_USERS_REQUEST, fetchUsersSuccess, fetchUsersFailure } from '../actions/userActions';
+import {
+    FETCH_USER_REQUEST,
+    fetchUserSuccess,
+    fetchUserFailure,
+    // other imports...
+} from '../actions/userActions';
 import { projectAPI } from '../services/api/api';
 
-function* fetchUsers(action) {
+function* fetchUser(action) {
     try {
-        const response = yield call(projectAPI.getUsers, action.userId);
-        yield put(fetchUsersSuccess(response.data));
+        const response = yield call(projectAPI.getUser, action.payload);
+        yield put(fetchUserSuccess(response.data));
     } catch (error) {
-        yield put(fetchUsersFailure(error.message));
+        yield put(fetchUserFailure(error.message));
     }
 }
 
 export default function* userSaga() {
-    yield takeEvery(FETCH_USERS_REQUEST, fetchUsers);
+    yield takeEvery(FETCH_USER_REQUEST, fetchUser);
+    // other saga watchers here...
 }

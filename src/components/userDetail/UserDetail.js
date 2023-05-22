@@ -1,31 +1,37 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
-import { fetchUsersRequest } from '../../actions/userActions';
+import { fetchUserRequest } from '../../actions/userActions';
 import { fetchPostsRequest } from '../../actions/postActions';
-import { Card, Button, Spinner } from 'react-bootstrap';
+import Loader from "../share/loader";
+import {Card} from "react-bootstrap";
+
+
 
 export const UserDetail = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
-    const users = useSelector(state => state.user.users);
+    const user = useSelector(state => state.user.user);
     const posts = useSelector(state => state.post.posts);
     const loading = useSelector(state => state.user.loading);
+    const [showContent, setShowContent] = useState(false);
 
     useEffect(() => {
-        dispatch(fetchUsersRequest(id));
+        dispatch(fetchUserRequest(id));
         dispatch(fetchPostsRequest());
+        setTimeout(() => {
+            setShowContent(true);
+        }, 1000); // 1 second delay
     }, [dispatch, id]);
 
-    const user = users.find(user => user.id.toString() === id);
     const userPosts = posts.filter(post => post.userId.toString() === id);
 
+    if (!showContent) {
+        return <Loader />;
+    }
+
     if (loading) {
-        return (
-            <Spinner animation="border" role="status">
-                <span className="visually-hidden">Loading...</span>
-            </Spinner>
-        );
+        return <div>Loading...</div>;
     }
 
     if (!user) {
@@ -34,29 +40,32 @@ export const UserDetail = () => {
 
     return (
         <div>
-            <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src="https://via.placeholder.com/150" /> {/* User avatar */}
+            <h1>{user.name}</h1>
+            <Card>
                 <Card.Body>
-                    <Card.Title>{user.name}</Card.Title>
+                    <Card.Title>User Information</Card.Title>
                     <Card.Text>
-                        {/* User information */}
-                        <p>{user.email}</p>
-                        <p>{user.address.city}, {user.address.street}</p>
+                        <strong>Email:</strong> {user.email}
+                        <br />
+                        <strong>Website:</strong> {user.website}
                     </Card.Text>
-                    <Link to="/" className="btn btn-primary">Back</Link>
                 </Card.Body>
             </Card>
 
             <h2>Posts:</h2>
-            {userPosts.map(post => (
-                <Card key={post.id} className="mb-4">
-                    <Card.Body>
-                        <Card.Title>{post.title}</Card.Title>
-                        <Card.Text>{post.body}</Card.Text>
-                        <Button variant="primary">Comments</Button>
-                    </Card.Body>
-                </Card>
-            ))}
+            {userPosts.length > 0 ? (
+                userPosts.map(post => (
+                    <Card key={post.id} className="mb-3">
+                        <Card.Body>
+                            <Card.Title>{post.title}</Card.Title>
+                            <Card.Text>{post.body}</Card.Text>
+                        </Card.Body>
+                    </Card>
+                ))
+            ) : (
+                <p>No posts found for this user.</p>
+            )}
+            <Link to="/" className="btn btn-primary">Back</Link>
         </div>
     );
 };

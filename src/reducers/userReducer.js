@@ -1,28 +1,32 @@
-import {FETCH_USERS_FAILURE, FETCH_USERS_REQUEST, FETCH_USERS_SUCCESS} from "../actions/userActions";
+import {
+    FETCH_USER_REQUEST,
+    FETCH_USER_SUCCESS,
+    FETCH_USER_FAILURE
+} from '../actions/userActions';
 
 const initialState = {
+    user: null,
     loading: false,
-    users: [],  // updated
-    error: ''
+    error: null
 };
 
-export const userReducer = (state = initialState, action) => {
+const userReducer = (state = initialState, action) => {
     switch (action.type) {
-        case FETCH_USERS_REQUEST:
+        case FETCH_USER_REQUEST:
             return {
                 ...state,
                 loading: true
             };
-        case FETCH_USERS_SUCCESS:
+        case FETCH_USER_SUCCESS:
             return {
+                ...state,
                 loading: false,
-                users: action.payload,  // updated
-                error: ''
+                user: action.payload
             };
-        case FETCH_USERS_FAILURE:
+        case FETCH_USER_FAILURE:
             return {
+                ...state,
                 loading: false,
-                users: [],  // updated
                 error: action.payload
             };
         default:

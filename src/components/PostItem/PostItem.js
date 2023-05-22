@@ -1,17 +1,14 @@
-import React, {useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {fetchCommentsRequest} from '../../actions/commentActions';
-import {Button, Card} from 'react-bootstrap';
-import Loader from "../share/loader/Loader";
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCommentsRequest } from '../../actions/commentActions';
+import { Button, Card } from 'react-bootstrap';
+import Loader from '../share/loader/Loader';
 
 export const PostItem = ({ post }) => {
     const dispatch = useDispatch();
     const comments = useSelector((state) => state.comment.comments);
-    const users = useSelector((state) => state.user.users);
-    const loadingComments = useSelector((state) => state.comment.loadingComments);
+    const loadingComments = useSelector((state) => state.comment.loadingComments[post.id] || false);
     const [commentsShown, setCommentsShown] = useState(false);
-
-    const user = users.find((user) => user.id === post.userId);
 
     const handleCommentsClick = () => {
         console.log("Comments button clicked.");
@@ -20,7 +17,6 @@ export const PostItem = ({ post }) => {
             console.log("Dispatching fetchCommentsRequest");
             dispatch(fetchCommentsRequest(post.id));
         }
-
     };
 
     return (
@@ -39,7 +35,6 @@ export const PostItem = ({ post }) => {
                     </div>
                 )}
             </div>
-            {/* ... rest of your code ... */}
         </Card>
     );
 };

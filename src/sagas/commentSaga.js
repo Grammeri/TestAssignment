@@ -4,6 +4,7 @@ import {projectAPI} from '../services/api/api';
 
 function* fetchComments(action) {
     try {
+        //yield delay(2000)
         const response = yield call(projectAPI.getComments, action.payload);
         yield put({type: FETCH_COMMENTS_SUCCESS, payload: {postId: action.payload, comments: response.data}});
     } catch (error) {

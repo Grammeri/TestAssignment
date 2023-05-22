@@ -29,17 +29,28 @@ export const PostList = () => {
         return () => clearTimeout(timer);
     }, [dispatch]);
 
-    const handleCommentsClick = (postId, userId) => {
+    const handleCommentsClick = async (postId, userId) => {
         setCommentsShown(prevState => ({
             ...prevState,
             [postId]: !prevState[postId]
         }));
 
+        setShowLoader(true); // Show the loader
+
         if (!comments[postId]) {
             dispatch(fetchUserRequest(userId));
+
+            // Introduce a 2-second delay before fetching comments
+            await new Promise(resolve => setTimeout(resolve, 2000));
+
             dispatch(fetchCommentsRequest(postId));
         }
+
+        setTimeout(() => {
+            setShowLoader(false); // Hide the loader after the delay
+        }, 2000);
     };
+
 
     // Get current posts
     const indexOfLastPost = currentPage * postsPerPage;
@@ -70,7 +81,7 @@ export const PostList = () => {
                         <Button
                             variant="secondary"
                             onClick={() => handleCommentsClick(post.id, post.userId)}
-                            className="mt-3"
+                            className="mt-3 ms-2"
                         >
                             Comments
                         </Button>

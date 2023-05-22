@@ -9,7 +9,7 @@ const PaginationComponent = ({ postsPerPage, totalPosts, paginate, currentPage }
     }
 
     return (
-        <div className="pagination-container"> {/* Add container div with class */}
+        <div className="pagination-container">
             <Pagination>
                 {pageNumbers.map(number => (
                     <Pagination.Item

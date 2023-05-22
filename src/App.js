@@ -1,11 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { PostList } from './components/PostList/PostList';
-import { About } from './components/about/About';
-import { UserDetail } from './components/userDetail/UserDetail';
-import { Header } from "./components/header/Header";
+import {BrowserRouter as Router, Navigate, Route, Routes} from 'react-router-dom';
+import {PostList} from './components/PostList/PostList';
+import {About} from './components/about/About';
+import {UserDetail} from './components/userDetail/UserDetail';
+import {Header} from "./components/header/Header";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import PageNotFound from "./assets/404.jpg";
 
 function App() {
     return (

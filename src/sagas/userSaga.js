@@ -18,5 +18,4 @@ function* fetchUser(action) {
 
 export default function* userSaga() {
     yield takeEvery(FETCH_USER_REQUEST, fetchUser);
-    // other saga watchers here...
 }

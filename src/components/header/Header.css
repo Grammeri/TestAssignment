@@ -1,0 +1,41 @@
+.header {
+    /* Your header styles */
+}
+
+.header .nav {
+    /* Your navigation styles */
+}
+
+.header .navMenu {
+    /* Your menu styles */
+}
+
+.header .navItem {
+    /* Your individual menu item styles */
+}
+
+.header .navItem .dropdown {
+    position: relative;
+}
+
+.header .navItem .dropdown .dropbtn {
+    /* Your dropdown button styles */
+}
+
+.header .navItem .dropdown .dropdownContent {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.header .navItem .dropdown .dropdownContent p {
+    padding: 10px;
+    margin: 0;
+}
+
+.header .navItem .dropdown:hover .dropdownContent {
+    display: block;
+}

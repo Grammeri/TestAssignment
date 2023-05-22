@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams, Link } from 'react-router-dom';
-import { fetchUserRequest } from '../../actions/userActions';
-import { fetchPostsRequest } from '../../actions/postActions';
-import { Card, Button, Container } from 'react-bootstrap';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {Link, useParams} from 'react-router-dom';
+import {fetchUserRequest} from '../../actions/userActions';
+import {fetchPostsRequest} from '../../actions/postActions';
+import {Card, Container} from 'react-bootstrap';
 import PaginationComponent from '../share/Pagination/PaginationComponent';
 import Loader from '../share/loader/Loader';
 

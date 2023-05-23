@@ -5,18 +5,21 @@ import {About} from './components/about/About';
 import {UserDetail} from './components/userDetail/UserDetail';
 import {Header} from "./components/header/Header";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import notFound from "./assets/404.jpg"
 
 function App() {
     return (
         <Router>
             <div>
-                <Header />
+                <Header/>
                 <Routes>
-                    <Route path="/" element={<PostList />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/user/:id" element={<UserDetail />} />
-                    <Route path="401" element={<h1 style={{textAlign: "center"}}>Wellcome to my test assignment, please use the menu</h1>}/>
-                    <Route path="*" element={<Navigate to="/401" replace />} />
+                    <Route path="/" element={<PostList/>}/>
+                    <Route path="/about" element={<About/>}/>
+                    <Route path="/user/:id" element={<UserDetail/>}/>
+                    <Route path="/testAssignment" element={<PostList/>}/>
+                    <Route path="/404"
+                           element={<div style={{textAlign: "center"}}><img src={notFound} alt="Not Found"/></div>}/>
+                    <Route path="*" element={<Navigate to="/404"/>}/>
                 </Routes>
             </div>
         </Router>

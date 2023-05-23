@@ -1,7 +1,7 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { Container, Nav, Navbar, NavDropdown, Image } from 'react-bootstrap';
-import { NavLink, Link, useLocation } from 'react-router-dom';
+import {useSelector} from 'react-redux';
+import {Container, Image, Nav, Navbar, NavDropdown} from 'react-bootstrap';
+import {Link, NavLink, useLocation} from 'react-router-dom';
 import man from "../../assets/man.jpg";
 
 export const Header = () => {
@@ -30,7 +30,7 @@ export const Header = () => {
                                     </div>
                                 </NavDropdown.Item>
                             )}
-                            {user && (
+                            {!isAboutPage && user && (
                                 <>
                                     <NavDropdown.Divider />
                                     <NavDropdown.Item>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pagination } from 'react-bootstrap';
+import {Pagination} from 'react-bootstrap';
 import './PaginationComponent.css';
 
 const PaginationComponent = ({ postsPerPage, totalPosts, paginate, currentPage }) => {

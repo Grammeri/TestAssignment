@@ -3,7 +3,6 @@ import {
     FETCH_USER_REQUEST,
     fetchUserSuccess,
     fetchUserFailure,
-    // other imports...
 } from '../actions/userActions';
 import { projectAPI } from '../services/api/api';
 

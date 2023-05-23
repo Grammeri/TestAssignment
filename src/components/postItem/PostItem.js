@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchCommentsRequest } from '../../actions/commentActions';
-import { Button, Card } from 'react-bootstrap';
+import React, {useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchCommentsRequest} from '../../actions/commentActions';
+import {Button, Card} from 'react-bootstrap';
 import Loader from '../share/loader/Loader';
 
 export const PostItem = ({ post }) => {

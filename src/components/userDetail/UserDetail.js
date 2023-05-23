@@ -4,7 +4,7 @@ import {Link, useParams} from 'react-router-dom';
 import {fetchUserRequest} from '../../actions/userActions';
 import {fetchPostsRequest} from '../../actions/postActions';
 import {Card, Container} from 'react-bootstrap';
-import PaginationComponent from '../share/Pagination/PaginationComponent';
+import PaginationComponent from '../share/pagination/PaginationComponent';
 import Loader from '../share/loader/Loader';
 
 export const UserDetail = () => {

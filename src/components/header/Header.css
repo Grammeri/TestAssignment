@@ -1,25 +1,5 @@
-.header {
-    /* Your header styles */
-}
-
-.header .nav {
-    /* Your navigation styles */
-}
-
-.header .navMenu {
-    /* Your menu styles */
-}
-
-.header .navItem {
-    /* Your individual menu item styles */
-}
-
 .header .navItem .dropdown {
     position: relative;
-}
-
-.header .navItem .dropdown .dropbtn {
-    /* Your dropdown button styles */
 }
 
 .header .navItem .dropdown .dropdownContent {

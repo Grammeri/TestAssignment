@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchPostsRequest } from '../../actions/postActions';
-import { fetchCommentsRequest } from '../../actions/commentActions';
-import { fetchUserRequest } from '../../actions/userActions';
-import { Link } from 'react-router-dom';
-import { Button, Container, ListGroup } from 'react-bootstrap';
-import PaginationComponent from '../share/Pagination/PaginationComponent';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchPostsRequest} from '../../actions/postActions';
+import {fetchCommentsRequest} from '../../actions/commentActions';
+import {fetchUserRequest} from '../../actions/userActions';
+import {Link} from 'react-router-dom';
+import {Button, Container, ListGroup} from 'react-bootstrap';
+import PaginationComponent from '../share/pagination/PaginationComponent';
 import Loader from '../share/loader/Loader';
 
 export const PostList = () => {

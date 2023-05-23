@@ -12,7 +12,7 @@ export const Header = () => {
     return (
         <Navbar bg="light" expand="lg">
             <Container>
-                <Navbar.Brand as={Link} to="/">TEST ASSIGNMENT</Navbar.Brand>
+                <Navbar.Brand as={Link} to="/">TEST ASSIGNMENT completed by Dmitry Nikolayev on May 22, 2023</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto" />

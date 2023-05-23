@@ -75,16 +75,18 @@ export const PostList = () => {
                     <ListGroup.Item key={post.id}>
                         <h2>{post.title}</h2>
                         <p>{post.body}</p>
-                        <Link to={`/user/${post.userId}`}>
-                            <img src="https://via.placeholder.com/50" alt="User Avatar" />
-                        </Link>
-                        <Button
-                            variant="secondary"
-                            onClick={() => handleCommentsClick(post.id, post.userId)}
-                            className="mt-3 ms-2"
-                        >
-                            Comments
-                        </Button>
+                        <div className="d-flex align-items-end">
+                            <Link to={`/user/${post.userId}`}>
+                                <img src="https://via.placeholder.com/50" alt="User Avatar" />
+                            </Link>
+                            <Button
+                                variant="secondary"
+                                onClick={() => handleCommentsClick(post.id, post.userId)}
+                                className="mt-3 ms-2"
+                            >
+                                Comments
+                            </Button>
+                        </div>
                         {comments[post.id] && commentsShown[post.id] && (
                             <div className="mt-3">
                                 {user && <p>Author: {user.name} - {user.email}</p>}
@@ -97,6 +99,7 @@ export const PostList = () => {
                             </div>
                         )}
                     </ListGroup.Item>
+
                 ))}
             </ListGroup>
             <PaginationComponent
